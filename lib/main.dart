@@ -12,6 +12,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: "/",
+      routes: {
+        "/" : (context) => MyHomePage(title: "title"),
+        "/s" :(context) => LoginPage(),
+        // "giG"
+      },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -33,7 +39,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -68,6 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    // _counter++;
+    // print(_counter);
   }
 
   @override
@@ -81,7 +89,10 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
-          onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));},
+          onTap: (){
+            // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+            Navigator.pushNamed(context, "/s");
+            },
           child: Icon(Icons.home)
           ),
         centerTitle: true,
