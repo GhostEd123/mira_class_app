@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:mira_class_app/homePage.dart';
+import 'package:mira_class_app/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,13 +12,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  void _showSnackbar(BuildContext context) {
+  void _showSnackbar(BuildContext context, String content) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Email and Password must be filled'),
-        duration: Duration(seconds: 3),
+        content: Text(content),
+        duration: Duration(seconds: 20),
         action: SnackBarAction(
-          label: 'OK',
+          label: 'DONE',
           onPressed: () {
             // You can add functionality to the "Dismiss" button here
             // Navigator.pop(context);
@@ -23,9 +27,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+   
   bool myObscureText = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  // String name = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,12 +121,18 @@ class _LoginPageState extends State<LoginPage> {
                       height: 45,
                       child: ElevatedButton(
                           onPressed: () {
-                            if (emailController.text.trim().isEmpty &&
+                            // name = emailController.text.trim();
+                            if (emailController.text.trim().isEmpty ||
                                 passwordController.text.trim().isEmpty) {
                                   print("started!!!!");
-                                  _showSnackbar(context);
+                                  _showSnackbar(context, "Email mst be filled");
                             } else {
-                              Navigator.pushNamed(context, "/");
+                              getX.write(user_details.GETX_EMAIL, emailController.text.trim());
+                              // Navigator.pushNamed(context, "/");
+                              print(user_details.GETX_EMAIL);
+                              print(emailController.text.trim());
+                              Get.to( MyHomePage(title: "title", name: "name"));
+                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyHomePage(title: "title", name: emailController.text.trim())));
                             }
                           },
                           child: Text("Sign In")),
