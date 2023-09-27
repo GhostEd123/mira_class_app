@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "958208929505",
+    "project_id": "miraclassapp",
+    "storage_bucket": "miraclassapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958208929505:android:e206c9057488c015ce51a0",
+        "android_client_info": {
+          "package_name": "com.example.mira_class_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjLy1GagSTcTYLgo-JmB8TyuXNhxo7C_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

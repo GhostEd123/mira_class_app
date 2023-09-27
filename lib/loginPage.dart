@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -12,6 +14,33 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String? userEmail;
+  String?  userPassword;
+
+  signInFunction(String email, String password){
+    FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then!((UserCredential newUser) {
+      String userId = newUser.user!.uid;
+
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get()
+          .then((_) {
+            setState(() {
+              // isLoading = false;
+            });
+            // getX.write(constants.id, userId);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => MyHomePage(id: userId)));
+      }).catchError((e) {
+        print(e);
+      });
+    }).catchError((e) {
+      print(e);
+    });
+    
+
+  }
   void _showSnackbar(BuildContext context, String content) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -27,6 +56,26 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  signUpFunction(String email, String password){
+    FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+  }
+  
+  // void _showSnackbar(BuildContext context, String content) {
+  //   ScaffoldMessenger.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text(content),
+  //       duration: Duration(seconds: 20),
+  //       action: SnackBarAction(
+  //         label: 'DONE',
+  //         onPressed: () {
+  //           // You can add functionality to the "Dismiss" button here
+  //           // Navigator.pop(context);
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
    
   bool myObscureText = false;
   TextEditingController emailController = TextEditingController();
@@ -128,10 +177,12 @@ class _LoginPageState extends State<LoginPage> {
                                   _showSnackbar(context, "Email mst be filled");
                             } else {
                               getX.write(user_details.GETX_EMAIL, emailController.text.trim());
-                              // Navigator.pushNamed(context, "/");
+                              userEmail = emailController.text.trim();
+                              userPassword = passwordController.text.trim();
                               print(user_details.GETX_EMAIL);
                               print(emailController.text.trim());
-                              Get.to( MyHomePage(title: "title", name: "name"));
+                              signUpFunction(userEmail! , userPassword!);
+                              // Get.to( MyHomePage(title: "title", name: "name"));
                               Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyHomePage(title: "title", name: emailController.text.trim())));
                             }
                           },

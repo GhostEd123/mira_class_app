@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:mira_class_app/api_request.dart';
 import 'package:mira_class_app/lastPage.dart';
 import 'package:mira_class_app/main.dart';
 
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title, required this.name});
+  const MyHomePage({super.key,  this.title,  this.name, this.id });
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -15,9 +17,9 @@ class MyHomePage extends StatefulWidget {
   // case the title) provided by the parent (in this case the App widget) and
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
-
-  final String title;
-  final String name;
+  final String? id;
+  final String? title;
+  final String? name;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -63,9 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
-            onTap: () {
+            onTap: () { 
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ApiRequest()));
+              // Get.to(ApiRequest());
               // Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
-              Navigator.pushNamed(context, "/s");
+              // Navigator.pushNamed(context, "/s");
             },
             child: const Icon(Icons.home)),
         centerTitle: true,
@@ -115,9 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: ClipOval(
                     child: AspectRatio(
                       aspectRatio: 1.0,
-                      child: Image.network(
-                        "images/flutter_practice.png",
-                        fit: BoxFit.cover,
+                      child: GestureDetector(
+                        onTap: (){Get.to(ApiRequest());},
+                        child: Image.network(
+                          "images/flutter_practice.png",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mira_class_app/constants.dart';
@@ -9,6 +10,7 @@ import 'package:mira_class_app/navigation.dart';
 void main() async {
   //Initialising GetX
   await GetStorage.init();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -22,15 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // initialRoute: "/",
-      // routes: {
-      //   "/": (context) => const MyHomePage(
-      //         title: "title",
-      //         name: "",
-      //       ),
-      //   "/s": (context) => const LoginPage(),
-      //   // "giG"
-      // },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -52,7 +45,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
       ),
-      home: ScreensControl()
+      home: LoginPage()
     );
   }
 }
