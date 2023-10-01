@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+// import 'package:get/get.dart';
+// import 'package:get/get_core/src/get_main.dart';
 import 'package:mira_class_app/homePage.dart';
 import 'package:mira_class_app/main.dart';
 
@@ -57,8 +57,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  signUpFunction(String email, String password){
-    FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+  signUpFunction (String email, String password) async{
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
   }
   
   // void _showSnackbar(BuildContext context, String content) {
@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                       width: 150,
                       height: 45,
                       child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // name = emailController.text.trim();
                             if (emailController.text.trim().isEmpty ||
                                 passwordController.text.trim().isEmpty) {
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage> {
                               userPassword = passwordController.text.trim();
                               print(user_details.GETX_EMAIL);
                               print(emailController.text.trim());
-                              signUpFunction(userEmail! , userPassword!);
+                              await signUpFunction(userEmail! , userPassword!);
                               // Get.to( MyHomePage(title: "title", name: "name"));
                               Navigator.of(context).push(MaterialPageRoute(builder: (_) => MyHomePage(title: "title", name: emailController.text.trim())));
                             }
